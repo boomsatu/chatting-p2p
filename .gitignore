@@ -1,0 +1,27 @@
+# Flutter build files
+p2pchat/build/
+p2pchat/.dart_tool/
+p2pchat/.flutter-plugins
+p2pchat/.flutter-plugins-dependencies
+p2pchat/ephemeral/
+p2pchat/windows/flutter/ephemeral/
+p2pchat/linux/flutter/ephemeral/
+p2pchat/macos/Flutter/ephemeral/
+
+# Rust compile files
+p2pchat/rust/target/
+p2pchat/rust/Cargo.lock
+
+# Dynamic library stubs
+p2pchat/sqlite3.dll
+
+# IDE, OS, and local configurations
+.idea/
+.vscode/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+.DS_Store
+Thumbs.db
