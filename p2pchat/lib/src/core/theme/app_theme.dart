@@ -7,19 +7,19 @@ class AppTheme {
 
   // ─── Color Palette ─────────────────────────────────────────
   static const Color _primaryLight = Color(0xFF1565C0);       // Blue 800
-  static const Color _primaryDark = Color(0xFF64B5F6);        // Blue 300
+  static const Color _primaryDark = Color(0xFF6366F1);        // Modern Indigo
   static const Color _secondaryLight = Color(0xFF00897B);     // Teal 600
-  static const Color _secondaryDark = Color(0xFF4DB6AC);      // Teal 300
-  static const Color _surfaceDark = Color(0xFF121212);
-  static const Color _surfaceContainerDark = Color(0xFF1E1E2E);
-  static const Color _onSurfaceDark = Color(0xFFE0E0E0);
-  static const Color _errorColor = Color(0xFFCF6679);
+  static const Color _secondaryDark = Color(0xFF06B6D4);      // Neon Cyan
+  static const Color _surfaceDark = Color(0xFF090A0F);        // Deep Obsidian Dark
+  static const Color _surfaceContainerDark = Color(0xFF121420); // Deep Space Blue Navy
+  static const Color _onSurfaceDark = Color(0xFFF1F5F9);      // Slate 100
+  static const Color _errorColor = Color(0xFFEF4444);         // Soft Red
 
   // Chat bubble colors
   static const Color sentBubbleLight = Color(0xFFDCF8C6);
-  static const Color sentBubbleDark = Color(0xFF1B5E20);
+  static const Color sentBubbleDark = Color(0xFF312E81);      // Premium Deep Indigo 900
   static const Color receivedBubbleLight = Color(0xFFFFFFFF);
-  static const Color receivedBubbleDark = Color(0xFF2D2D3A);
+  static const Color receivedBubbleDark = Color(0xFF1E293B);   // Slate 800
 
   // Status colors
   static const Color onlineColor = Color(0xFF4CAF50);

@@ -3,6 +3,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../../core/providers/core_providers.dart';
+import '../../../../core/database/database.dart';
+import '../../../../core/database/dao/identity_dao.dart';
+import 'package:drift/drift.dart' show Value;
 import 'package:p2pchat/src/rust/api/crypto_api.dart' as crypto_api;
 
 /// Generate Keys screen — creates the cryptographic identity with an animation
@@ -58,6 +61,18 @@ class _GenerateKeysScreenState extends ConsumerState<GenerateKeysScreen>
 
       // Activate the identity in the Rust keystore
       await crypto_api.setActiveIdentity(seed: identity.seed);
+
+      // Save keys directly to Drift database
+      final db = ref.read(databaseProvider);
+      final identityDao = IdentityDao(db);
+      await identityDao.insertOrUpdateIdentity(IdentityCompanion(
+        id: const Value(1),
+        peerId: Value(identity.peerId),
+        pubKey: Value(identity.boxPubkey),
+        signPubKey: Value(identity.signingPubkey),
+        displayName: const Value('Me'), // placeholder, updated in next screen
+        createdAt: Value(DateTime.now().millisecondsSinceEpoch),
+      ));
 
       if (!mounted) return;
       setState(() {

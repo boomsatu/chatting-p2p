@@ -9,6 +9,7 @@ import '../../features/onboarding/presentation/screens/tutorial_screen.dart';
 import '../../features/chat/presentation/screens/chat_list_screen.dart';
 import '../../features/chat/presentation/screens/chat_screen.dart';
 import '../../features/chat/presentation/screens/add_contact_screen.dart';
+import '../../features/settings/presentation/screens/settings_screen.dart';
 
 final appRouter = GoRouter(
   initialLocation: '/splash',
@@ -47,6 +48,10 @@ final appRouter = GoRouter(
         final conversationId = state.pathParameters['conversationId']!;
         return ChatScreen(conversationId: conversationId);
       },
+    ),
+    GoRoute(
+      path: '/settings',
+      builder: (context, state) => const SettingsScreen(),
     ),
   ],
 );

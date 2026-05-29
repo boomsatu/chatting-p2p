@@ -24,12 +24,14 @@ class P2PChatApp extends ConsumerWidget {
     ref.watch(chatRepositoryProvider);
     ref.watch(presenceServiceProvider);
 
+    final themeMode = ref.watch(themeModeProvider);
+
     return MaterialApp.router(
       title: 'P2P Chat',
       debugShowCheckedModeBanner: false,
       theme: AppTheme.lightTheme,
       darkTheme: AppTheme.darkTheme,
-      themeMode: ThemeMode.system,
+      themeMode: themeMode,
       routerConfig: appRouter,
     );
   }

@@ -1,4 +1,6 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import '../database/database.dart';
 import '../services/keystore_service.dart';
 import '../services/presence_service.dart';
@@ -67,4 +69,47 @@ final chatProvider = StreamProvider.family<List<Message>, int>((ref, conversatio
 final groupsProvider = StreamProvider<List<Group>>((ref) {
   final db = ref.watch(databaseProvider);
   return GroupsDao(db).watchAllGroups();
+});
+
+/// Theme mode notifier — reads and writes the application ThemeMode to secure storage
+class ThemeModeNotifier extends StateNotifier<ThemeMode> {
+  final FlutterSecureStorage _storage = const FlutterSecureStorage();
+  static const _themeKey = 'app_theme_mode';
+
+  ThemeModeNotifier() : super(ThemeMode.system) {
+    _loadTheme();
+  }
+
+  Future<void> _loadTheme() async {
+    try {
+      final value = await _storage.read(key: _themeKey);
+      if (value == 'light') {
+        state = ThemeMode.light;
+      } else if (value == 'dark') {
+        state = ThemeMode.dark;
+      } else {
+        state = ThemeMode.system;
+      }
+    } catch (_) {
+      state = ThemeMode.system;
+    }
+  }
+
+  Future<void> setTheme(ThemeMode mode) async {
+    state = mode;
+    try {
+      String value = 'system';
+      if (mode == ThemeMode.light) {
+        value = 'light';
+      } else if (mode == ThemeMode.dark) {
+        value = 'dark';
+      }
+      await _storage.write(key: _themeKey, value: value);
+    } catch (_) {}
+  }
+}
+
+/// Global provider for the active theme mode
+final themeModeProvider = StateNotifierProvider<ThemeModeNotifier, ThemeMode>((ref) {
+  return ThemeModeNotifier();
 });

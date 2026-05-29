@@ -35,20 +35,18 @@ class _SetupProfileScreenState extends ConsumerState<SetupProfileScreen> {
       final db = ref.read(databaseProvider);
       final identityDao = IdentityDao(db);
 
-      // Load seed from keystore to get peer_id and pub keys
-      final keystoreService = ref.read(keystoreServiceProvider);
-      final seed = await keystoreService.loadIdentitySeed();
-      if (seed == null) throw Exception('No identity seed found');
+      // Get pre-generated identity
+      final existing = await identityDao.getIdentity();
+      if (existing == null) throw Exception('Identity keys not generated yet');
 
-      // Re-derive keys from seed via Rust
-      // For now we store a placeholder — real implementation will call Rust
+      // Update the display name
       await identityDao.insertOrUpdateIdentity(IdentityCompanion(
         id: const Value(1),
-        peerId: const Value('pending'), // will be updated from Rust
-        pubKey: const Value('pending'),
-        signPubKey: const Value('pending'),
+        peerId: Value(existing.peerId),
+        pubKey: Value(existing.pubKey),
+        signPubKey: Value(existing.signPubKey),
         displayName: Value(name),
-        createdAt: Value(DateTime.now().millisecondsSinceEpoch),
+        createdAt: Value(existing.createdAt),
       ));
 
       if (!mounted) return;
